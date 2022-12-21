@@ -1,23 +1,21 @@
 const store = require('./store');
 
-function addMessage(user, message){
+function addUser(name){
     return new Promise((res, rej) => {
-        if(!user || !message){
-            console.error('[MessageController] No hay usuario o mensaje');
+        if(!name){
+            console.error('[MessageController] No se ingresó el nombre del usuario');
             return rej('Los datos son incorrectos');
         };
 
-        const fullMessage = {
-            user: user,
-            message: message,
-            date: new Date()
+        const User = {
+            name: name
         };
 
-        res(store.add(fullMessage));
+        res(store.add(User));
     });
 };
 
-function getMessages(filterUser){
+function getUsers(filterUser){
     return new Promise((res,rej) =>{
         if (filterUser){
             res(store.get(filterUser));
@@ -27,17 +25,17 @@ function getMessages(filterUser){
     });
 };
 
-function updateMessage(id, message){
+function updateUser(id, user){
     return new Promise((res,rej) =>{
-        if(!id || !message){
-            console.error('[MessageController] No hay Id o mensaje');
+        if(!id || !user){
+            console.error('[MessageController] No hay Id o nombre de usuario');
             return rej('Los datos son incorrectos');
         };
-        res(store.update(id, message));
+        res(store.update(id, user));
     });
 };
 
-function deleteMessage(id){
+function deleteUser(id){
     return new Promise((res,rej) =>{
         if(!id){
             console.error('[MessageController] No hay Id');
@@ -48,8 +46,8 @@ function deleteMessage(id){
 };
 
 module.exports = {
-    addMessage,
-    getMessages,
-    updateMessage,
-    deleteMessage
+    addUser,
+    getUsers,
+    updateUser,
+    deleteUser
 }
