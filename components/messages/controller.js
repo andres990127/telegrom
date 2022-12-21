@@ -27,14 +27,29 @@ function updateMessage(id, message){
     });
 };
 
-function getMessages(){
+function deleteMessage(id){
     return new Promise((res,rej) =>{
-        res(store.list());
+        if(!id){
+            console.error('[MessageController] No hay Id');
+            return rej('Los datos son incorrectos');
+        };
+        res(store.delete(id));
+    });
+};
+
+function getMessages(filterUser){
+    return new Promise((res,rej) =>{
+        if (filterUser){
+            res(store.get(filterUser));
+        } else{
+            res(store.list());
+        }
     });
 };
 
 module.exports = {
     addMessage,
     getMessages,
-    updateMessage
+    updateMessage,
+    deleteMessage
 }

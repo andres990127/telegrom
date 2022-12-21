@@ -1,13 +1,14 @@
-const db = require('mongoose'); 
 const Model = require('./model');
-
-db.Promise = global.Promise;
-db.connect('mongodb+srv://andres0127:andres2704@cluster0.cbiaivj.mongodb.net/test');
-console.log('Base de datos conectada con éxito')
 
 async function addMessage(message){
     const myMessage = new Model(message);
     return await myMessage.save();
+}
+
+async function getMessage(user){
+    return await Model.find({
+        user
+    });
 }
 
 async function getMessages(){
@@ -23,12 +24,17 @@ async function updateMessage(id, message){
     return await data.save();
 }
 
+async function deleteMessage(id){
+    return await Model.deleteOne({
+        _id: id
+    });
+}
+
 
 module.exports = {
     add: addMessage,
     list: getMessages,
-    update: updateMessage
-    // get
-    // update
-    // delete
+    update: updateMessage,
+    get: getMessage,
+    delete: deleteMessage
 }
