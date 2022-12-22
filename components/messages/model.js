@@ -16,6 +16,9 @@ const mySchema = new Schema({
         required: true
     },
     date: Date,
+    file: {
+        type: String
+    },
 });
 
 module.exports = mongoose.model('Message', mySchema);

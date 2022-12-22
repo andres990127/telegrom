@@ -1,17 +1,23 @@
 const store = require('./store');
 
-function addMessage(chat, user, message){
+function addMessage(chat, user, message, file){
     return new Promise((res, rej) => {
         if(!chat|| !user || !message){
             console.error('[MessageController] No hay usuario o mensaje');
             return rej('Los datos son incorrectos');
         };
 
+        let fileURL = '';
+        if(file){
+            fileURL = 'https://andres990127-humble-telegram-954j69wgwjqh7x4q-8080.preview.app.github.dev/app/files/' + file.filename;
+        }
+
         const fullMessage = {
             chat: chat,
             user: user,
             message: message,
-            date: new Date()
+            date: new Date(),
+            file: fileURL,
         };
 
         res(store.add(fullMessage));

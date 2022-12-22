@@ -17,7 +17,7 @@ router.get('/', (req, res) =>{
 });
 
 router.post('/', uploadFile.single('file'), (req, res) =>{
-    controller.addMessage(req.body.chat, req.body.user, req.body.message)
+    controller.addMessage(req.body.chat, req.body.user, req.body.message, req.file)
         .then( data => response.success(req, res, data, 201))
         .catch( e => response.error(req, res, 'Información inválida', 400, '[Error en el controlador de mensajes] '+ e ))
 });
