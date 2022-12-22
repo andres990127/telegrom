@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const cors = require('cors');
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ const app = express();
 const server = require('http').Server(app);
 const socket = require('./socket');
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/app', express.static('public'));
 socket.connect(server);
