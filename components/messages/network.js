@@ -1,7 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+
 const response = require('../../network/response');
 const controller = require('./controller');
+
+const uploadFile = multer({
+    dest: 'public/files/',
+})
 
 router.get('/', (req, res) =>{
     const filterMessages = req.query.user || null;
@@ -10,8 +16,8 @@ router.get('/', (req, res) =>{
         .catch( e => response.error(req, res, 'Unexpected error', 500, '[Error en el controlador de mensajes] '+ e))
 });
 
-router.post('/', (req, res) =>{
-    controller.addMessage(req.body.user, req.body.message)
+router.post('/', uploadFile.single('file'), (req, res) =>{
+    controller.addMessage(req.body.chat, req.body.user, req.body.message)
         .then( data => response.success(req, res, data, 201))
         .catch( e => response.error(req, res, 'Información inválida', 400, '[Error en el controlador de mensajes] '+ e ))
 });

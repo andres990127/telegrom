@@ -12,7 +12,9 @@ async function getMessage(user){
 }
 
 async function getMessages(){
-    return await Model.find();
+    return data = await Model.find()
+        .populate('user')
+        .populate('chat');
 }
 
 async function updateMessage(id, message){
