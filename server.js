@@ -9,13 +9,17 @@ const db = require('./db');
 
 db.connect(process.env.MONGO_URI);
 
-let app = express();
+const app = express();
+
+const server = require('http').Server(app);
+const socket = require('./socket');
 
 app.use(bodyParser.json());
 app.use('/app', express.static('public'));
+socket.connect(server);
 
 router(app);
 
-app.listen(process.env.PORT,() =>{
+server.listen(process.env.PORT,() =>{
     console.log('Aplicación escuchando por el puerto ' + process.env.PORT);
 });
